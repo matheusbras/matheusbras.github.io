@@ -2,22 +2,34 @@
 layout: default
 ---
 
-<div class="home">
+<div class="v-card">
 
-  <h1 class="page-heading">Posts</h1>
+  <div class="photo">
+    <img src="/images/matheus-profile.jpg" alt='Matheus Bras'>
+  </div>
 
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+  <div class="info">
+    <h1 class="name">Matheus Bras</h1>
+    <span class="location">Rio de Janeiro, Brazil</span>
+    <p class="bio">Developer @ <a href="http://helabs.com.br" title="HE:labs">HE:labs</a>. Working with Ruby, Javascript and some Front-End too.</p>
 
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
-      </li>
-    {% endfor %}
-  </ul>
+    <div class="links">
+    <a href="#" class="icon github">
+      Github
+    </a>
 
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
+    <a href="#" class="icon twitter">
+      Twitter
+    </a>
+
+    <a href="#" class="icon email">
+      Email
+    </a>
+
+    <a href="#" class="icon blog">
+      Blog
+    </a>
+    </div>
+  </div>
 
 </div>

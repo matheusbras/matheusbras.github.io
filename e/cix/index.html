@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title> <3 </title>
+
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,600">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/timer.css">
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="/js/countup.min.js"></script>
+    <script src="/js/moment.js"></script>
+  </head>
+
+  <body>
+    <div class="overlay"></div>
+    <h1>Matheus & Cecília</h1>
+
+    <div class="for-how-long">
+      <div id="years"></div>
+      <div id="months"></div>
+      <div id="weeks"></div>
+      <div id="days"></div>
+      <div id="hours"></div>
+      <div id="seconds"></div>
+    </div>
+
+    <script type="text/javascript">
+      var thatDay = moment('2011-03-18');
+      var now = moment();
+
+      var years = now.diff(thatDay, 'years');
+      var months = now.diff(thatDay, 'months');
+      var weeks = now.diff(thatDay, 'weeks');
+      var days = now.diff(thatDay, 'days');
+      var hours = now.diff(thatDay, 'hours');
+      var seconds = now.diff(thatDay, 'seconds');
+
+      var options = {
+        useEasing : true,
+        useGrouping : true,
+        separator : '',
+        decimal : ',',
+        prefix : '',
+        suffix : ''
+      };
+
+      var yearsCountUp = new countUp("years", 0, years, 0, 3, options);
+      var monthsCountUp = new countUp("months", 0, months, 0, 3, options);
+      var weeksCountUp = new countUp("weeks", 0, weeks, 0, 2.5, options);
+      var daysCountUp = new countUp("days", 0, days, 0, 2.5, options);
+      var hoursCountUp = new countUp("hours", 0, hours, 0, 2.5, options);
+      var secondsCountUp = new countUp("seconds", 0, seconds, 0, 2.5, options);
+
+      $("#years").addClass('animated fadeInUp');
+      yearsCountUp.start(function() {
+        $("#months").addClass('animated fadeInUp');
+        monthsCountUp.start(function() {
+          $("#weeks").addClass('animated fadeInUp');
+          weeksCountUp.start(function() {
+            $("#days").addClass('animated fadeInUp');
+            daysCountUp.start(function() {
+              $("#hours").addClass('animated fadeInUp');
+              hoursCountUp.start(function() {
+                $("#seconds").addClass('animated fadeInUp');
+                secondsCountUp.start();
+              });
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+
+</html>

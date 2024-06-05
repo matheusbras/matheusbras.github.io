@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -18,30 +17,53 @@
       overflow: hidden;
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
 </head>
 
 <body>
-  <img src="https://inventum.org.br/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fcloud_smcti%2Fassets%2Fimages%2Finventum-2024%2Flogos%2FInventumLogo.png&amp;w=1080&amp;q=75" style="
-    width: 300px;
-    position: fixed;
-    top: 10px;
-    left: 10px;
-">
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+  <img src="https://inventum.org.br/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fcloud_smcti%2Fassets%2Fimages%2Finventum-2024%2Flogos%2FInventumLogo.png&amp;w=1080&amp;q=75" style="width: 300px; position: fixed; top: 10px; left: 10px;">
 
   <script>
     let touchesData = {};
 
-  function setup() {
-    createCanvas(windowWidth, windowHeight);
-    background(0);
-  }
+    function setup() {
+      createCanvas(windowWidth, windowHeight);
+      background(0);
+    }
 
-  function draw() {
-    for (let t of touches) {
-      let id = t.id;
-      if (!touchesData[id]) {
+    function draw() {
+      for (let t of touches) {
+        let id = t.id;
+        if (!touchesData[id]) {
+          touchesData[id] = {
+            x: t.x,
+            y: t.y,
+            color: color(203, 16, 16),
+            prevX: t.x,
+            prevY: t.y
+          };
+        } else {
+          let data = touchesData[id];
+          noFill(0);
+          variableRect(t.x, t.y, data.prevX, data.prevY, data.color);
+          data.prevX = t.x;
+          data.prevY = t.y;
+        }
+      }
+    }
+
+    function variableRect(x, y, px, py, color) {
+      let speed = abs(x - px) + abs(y - py);
+      noFill(0);
+      strokeWeight(2);
+      stroke(color);
+      rect(x, y, speed, speed);
+    }
+
+    function touchStarted() {
+      for (let t of touches) {
+        let id = t.id;
+
         touchesData[id] = {
           x: t.x,
           y: t.y,
@@ -49,57 +71,27 @@
           prevX: t.x,
           prevY: t.y
         };
-      } else {
-        let data = touchesData[id];
-        noFill(0);
-        variableRect(t.x, t.y, data.prevX, data.prevY, data.color);
-        data.prevX = t.x;
-        data.prevY = t.y;
       }
-    }
-  }
 
-  function variableRect(x, y, px, py, color) {
-    let speed = abs(x - px) + abs(y - py);
-    noFill(0);
-    strokeWeight(2);
-    stroke(color);
-    rect(x, y, speed, speed);
-  }
-
-  function touchStarted() {
-    for (let t of touches) {
-      let id = t.id;
-
-      touchesData[id] = {
-        x: t.x,
-        y: t.y,
-        color: color(203, 16, 16),
-        prevX: t.x,
-        prevY: t.y
-      };
+      return false;
     }
 
-    return false;
-  }
+    function touchEnded() {
+      for (let t of touches) {
+        delete touchesData[t.id];
+      }
 
-  function touchEnded() {
-    for (let t of touches) {
-      delete touchesData[t.id];
+      return false;
     }
 
-    return false;
-  }
+    function windowResized() {
+      resizeCanvas(windowWidth, windowHeight);
+    }
 
-  function windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
-  }
-
-  function keyPressed() {
-    save("screenshot.png");
-    background(0);
-  }
-</script>
-  </body>
-  
-  </html>
+    function keyPressed() {
+      save("screenshot.png");
+      background(0);
+    }
+  </script>
+</body>
+</html>
